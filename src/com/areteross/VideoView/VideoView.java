@@ -2,8 +2,6 @@
 // VideoView
 //
 //
-// Created by Alex Ross on 1/29/13
-// Copyright (c) 2012 Alex Ross. All rights reserved.
 //
 
 package com.areteross.VideoView;
@@ -118,6 +116,10 @@ public class VideoView extends TextureView {
                 break;
         }
         return result;
+    }
+
+    public void setOnCompletionListener(MediaPlayer.OnCompletionListener listener) {
+        onCompletionListener = listener;
     }
 
     public void setVideoPath(String path) {
@@ -264,6 +266,9 @@ public class VideoView extends TextureView {
             targetState = STATE_PLAYBACK_COMPLETED;
             Log.d(LOG_TAG, "Video completed number " + number);
             surface.release();
+            if (onCompletionListener != null) {
+                onCompletionListener.onCompletion(mp);
+            }
         }
     };
 
